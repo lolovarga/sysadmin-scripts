@@ -3,10 +3,9 @@ import time
 import sys
 import getopt
 
-def main(argv):
+def parse_args(argv):
     host=""
     port=""
-    timeout=1.0
     try:
         opts, args = getopt.getopt(argv, "h:p:", ["host", "port"])
     except getopt.GetoptError:
@@ -20,10 +19,13 @@ def main(argv):
             host = arg
         elif opt == '-p':
             port = int(arg)
+    return (host, port)
+
+def connect(host, port):
     for i in range(5):
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            s.settimeout(timeout)
+            s.settimeout(1.0)
             s.connect((host, port))
             print "[%s] Connection established" % time.strftime("%H:%M:%S")
             time.sleep(1)
@@ -33,4 +35,5 @@ def main(argv):
             print ex.message
 
 if __name__ == "__main__":
-    main(sys.argv[1:])    
+    host, port = parse_args(sys.argv[1:])
+    connect(host, port)
