@@ -27,4 +27,5 @@ def get_totals(rows):
 if __name__ == '__main__':
     file_rows = commands.getoutput('ls -l ' + sys.argv[1])
     user_totals = get_totals(file_rows.split('\n'))
-    print user_totals
+    for user in user_totals:
+        print "%-10s %20s" % user
