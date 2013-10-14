@@ -24,8 +24,14 @@ def check_redirect(url):
         print ex.message
         sys.exit(1)
 
+def add_protocol(url):
+    if url.startswith('http'):
+        return url
+    return 'http://%s' % url
+
 if __name__ == '__main__':
     url = parse_args(sys.argv[1:])
+    url = add_protocol(url)
     redirect = check_redirect(url)
-    print redirect
+    print '%s => %s' % (url, redirect)
 
